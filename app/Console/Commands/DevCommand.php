@@ -30,14 +30,8 @@ class DevCommand extends Command
      */
     public function handle()
     {
-//        $this->prepareData();
-//        $this->prepareManyToMany();
-
-//        $department = Department::find(1);
-
-        $worker = Worker::find(1);
-//        dd($worker->position->department->toArray());
-        dd($worker->projects->toArray());
+        $this->prepareData();
+        $this->prepareManyToMany();
 
         return 0;
     }
