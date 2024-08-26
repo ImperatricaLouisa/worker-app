@@ -36,12 +36,34 @@ class DevCommand extends Command
 //        $this->prepareManyToMany();
 
         $worker = Worker::find(1);
-        $client = Client::find(1);
+        $client = Worker::find(1);
+
+        $worker->reviews()->create([
+            'body' => 'body 1'
+        ]);
+        $worker->reviews()->create([
+            'body' => 'body 2'
+        ]);
+        $worker->reviews()->create([
+            'body' => 'body 3'
+        ]);
+        $client->reviews()->create([
+            'body' => 'body 1'
+        ]);
+        $client->reviews()->create([
+            'body' => 'body 2'
+        ]);
+        $client->reviews()->create([
+            'body' => 'body 3'
+        ]);
+
+        dd($worker->reviews->toArray());
+
 //        $worker->avatar()->create(['path' => 'worker path']);
 //        $client->avatar()->create(['path' => 'client path']);
-
-        $avatar = Avatar::find(4);
-        dd($avatar->avatarable->toArray());
+//
+//        $avatar = Avatar::find(4);
+//        dd($avatar->avatarable->toArray());
 
 
         return 0;
@@ -49,6 +71,19 @@ class DevCommand extends Command
 
     private function prepareData()
     {
+        Client::create([
+            'name'=> 'Alexandrina'
+        ]);
+        Client::create([
+            'name'=> 'Maiakovskiy'
+        ]);
+        Client::create([
+            'name'=> 'Oduvanchik'
+        ]);
+        Client::create([
+            'name'=> 'Tvorogok'
+        ]);
+
         $department1 = Department::create([
             'title' => 'IT'
         ]);

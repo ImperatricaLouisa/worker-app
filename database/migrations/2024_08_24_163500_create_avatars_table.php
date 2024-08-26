@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('avatars', function (Blueprint $table) {
             $table->id();
             $table->string('path');
-            $table->morphs('avatarable');
             $table->timestamps();
+
+            $table->unsignedBigInteger('avatarable_id');//сохраняется id работника или клиента из их таблиц
+            $table->string('avatarable_type');//указывается модель с помощью которой определяется работник это или клиент
         });
     }
 
