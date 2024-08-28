@@ -6,6 +6,7 @@ use App\Models\Avatar;
 use App\Models\Client;
 use App\Models\Department;
 use App\Models\Project;
+use App\Models\Review;
 use App\Models\Worker;
 use App\Models\Position;
 
@@ -57,7 +58,9 @@ class DevCommand extends Command
             'body' => 'body 3'
         ]);
 
-        dd($worker->reviews->toArray());
+        $review = Review::find(1);
+
+        dd($review->reviewable->toArray());
 
 //        $worker->avatar()->create(['path' => 'worker path']);
 //        $client->avatar()->create(['path' => 'client path']);
