@@ -2,8 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Avatar;
+use App\Models\Client;
 use App\Models\Department;
 use App\Models\Project;
+use App\Models\Review;
+use App\Models\Tag;
 use App\Models\Worker;
 use App\Models\Position;
 
@@ -32,18 +36,34 @@ class DevCommand extends Command
     {
 //        $this->prepareData();
 //        $this->prepareManyToMany();
-
-//        $department = Department::find(1);
-
+//
         $worker = Worker::find(1);
-//        dd($worker->position->department->toArray());
-        dd($worker->projects->toArray());
+        $client = Client::find(2);
+
+        $worker->tags()->attach([1, 3]);
+        $client->tags()->attach([2, 3]);
+
+        $tag = Tag::find(2);
+        dd($tag->clients->toArray());
 
         return 0;
     }
 
     private function prepareData()
     {
+        Client::create([
+            'name'=> 'Alexandrina'
+        ]);
+        Client::create([
+            'name'=> 'Maiakovskiy'
+        ]);
+        Client::create([
+            'name'=> 'Oduvanchik'
+        ]);
+        Client::create([
+            'name'=> 'Tvorogok'
+        ]);
+
         $department1 = Department::create([
             'title' => 'IT'
         ]);
