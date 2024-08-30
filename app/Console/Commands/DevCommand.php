@@ -7,6 +7,7 @@ use App\Models\Client;
 use App\Models\Department;
 use App\Models\Project;
 use App\Models\Review;
+use App\Models\Tag;
 use App\Models\Worker;
 use App\Models\Position;
 
@@ -35,39 +36,15 @@ class DevCommand extends Command
     {
 //        $this->prepareData();
 //        $this->prepareManyToMany();
-
-        $worker = Worker::find(1);
-        $client = Worker::find(1);
-
-        $worker->reviews()->create([
-            'body' => 'body 1'
-        ]);
-        $worker->reviews()->create([
-            'body' => 'body 2'
-        ]);
-        $worker->reviews()->create([
-            'body' => 'body 3'
-        ]);
-        $client->reviews()->create([
-            'body' => 'body 1'
-        ]);
-        $client->reviews()->create([
-            'body' => 'body 2'
-        ]);
-        $client->reviews()->create([
-            'body' => 'body 3'
-        ]);
-
-        $review = Review::find(1);
-
-        dd($review->reviewable->toArray());
-
-//        $worker->avatar()->create(['path' => 'worker path']);
-//        $client->avatar()->create(['path' => 'client path']);
 //
-//        $avatar = Avatar::find(4);
-//        dd($avatar->avatarable->toArray());
+        $worker = Worker::find(1);
+        $client = Client::find(2);
 
+        $worker->tags()->attach([1, 3]);
+        $client->tags()->attach([2, 3]);
+
+        $tag = Tag::find(2);
+        dd($tag->clients->toArray());
 
         return 0;
     }

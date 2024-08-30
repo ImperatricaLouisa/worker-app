@@ -19,4 +19,9 @@ class Client extends Model
         return $this->morphMany(Review::class, 'reviewable');
     }
 
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
+
 }
