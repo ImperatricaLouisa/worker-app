@@ -34,11 +34,11 @@ class DevCommand extends Command
      */
     public function handle()
     {
-//        $this->prepareData();
-//        $this->prepareManyToMany();
-//
-        $position = Position::first();
-        dd($position->queryWorker->toArray());
+        $this->prepareData();
+        $this->prepareManyToMany();
+////
+//        $position = Position::first();
+//        dd($position->queryWorker->toArray());
 
         return 0;
     }
