@@ -9,7 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('workers', function (Blueprint $table) {
             $table->id();
@@ -21,7 +21,8 @@ return new class extends Migration
             $table->boolean('is_married')->default(false);
             $table->timestamps();
 
-            $table->foreignId('position_id')->nullable()->index()->constrained('workers');//nullable() делает атрибут нуабельным, можно запихнуть и перед и после index()
+
+            $table->foreignId('position_id')->nullable()->index()->constrained('positions');
         });
     }
 
