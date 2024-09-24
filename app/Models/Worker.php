@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\Worker\CreatedEvent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,6 +12,15 @@ use Illuminate\Database\Eloquent\Model;
 
         protected $table = 'workers'; //Указывает, что данная модель связана с таблицей workers в базе данных.
         protected $guarded = false;
+
+        protected static function booted()
+        {
+            static::created(function($model){
+
+                event(new CreatedEvent($model));
+
+            });
+        }
 
         public function profile()
         {
