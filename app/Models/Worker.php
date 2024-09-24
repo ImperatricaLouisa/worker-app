@@ -16,9 +16,12 @@ use Illuminate\Database\Eloquent\Model;
         protected static function booted()
         {
             static::created(function($model){
-
                 event(new CreatedEvent($model));
-
+            });
+            static::updated(function($model){
+                if ($model->wasChanged() && $model->getOriginal('age') != (int)$model->getAttributes()['age']){
+                    dd(11111111111111);
+                }
             });
         }
 
