@@ -32,10 +32,15 @@ class DevCommand extends Command {
      * Execute the console command.
      */
     public function handle() {
-        $worker = Worker::find(1);
-        $worker->update([
-            'age'=>'13.000'
-        ]);
+        $worker1 = Worker::find(1);
+        $worker2 = Worker::find(2);
+        $worker1->delete();
+        $worker2->delete();
+        $workers = Worker::onlyTrashed()->get();
+        foreach($workers as $worker){
+            $worker->restore();
+        }
+        dd($workers->count());
         return 0;
     }
 }

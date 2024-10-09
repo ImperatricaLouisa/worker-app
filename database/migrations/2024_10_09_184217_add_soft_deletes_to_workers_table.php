@@ -11,16 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::dropIfExists('workers');
+        Schema::table('workers', function (Blueprint $table) {
+            $table->softDeletes();
+        });
     }
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void //восстановление удаленного
+    public function down(): void
     {
-        Schema::create('workers', function (Blueprint $table) {
-            $table->id();
+        Schema::table('workers', function (Blueprint $table) {
+            $table->dropSoftDeletes();
         });
     }
 };
