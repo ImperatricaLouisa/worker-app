@@ -25,8 +25,6 @@ class SomeJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $someVar = 'My text';
-        $intVar = 100;
-        dump($someVar . ' ' . $intVar);
+        dd(131313131313);
     }
 }
