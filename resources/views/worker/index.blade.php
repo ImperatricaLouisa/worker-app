@@ -2,11 +2,11 @@
 @section('content')
     <div>
         <hr>
-        <a href="{{route('worker.create')}}">Добавить</a>
+        <a href="{{route('workers.create')}}">Добавить</a>
         <hr>
     </div>
     <div>
-        <form action="{{ route('worker.index') }}">
+        <form action="{{ route('workers.index') }}">
             <input type="text" name="name" placeholder="name" value="{{ request()-> get('name')}}">
             <input type="text" name="surname" placeholder="surname" value="{{ request()-> get('surname')}}">
             <input type="email" name="email" placeholder="email" value="{{ request()-> get('email')}}">
@@ -17,7 +17,7 @@
             <label for="IsMarried">Is married</label>
             <input type="submit">
         </form>
-        <a href="{{ route('worker.index') }}">Сбросить</a>
+        <a href="{{ route('workers.index') }}">Сбросить</a>
     </div>
     <div>
         <hr>
@@ -30,12 +30,12 @@
                 <div>description:{{ $worker->description}}</div>
             </div>
             <div>
-                <a href="{{ route('worker.show', $worker->id)}}">Просмотреть</a>
+                <a href="{{ route('workers.show', $worker->id)}}">Просмотреть</a>
             </div>
             <div>
-                <a href="{{ route('worker.edit', $worker->id)}}">Редактировать</a>
+                <a href="{{ route('workers.edit', $worker->id)}}">Редактировать</a>
             </div>
-            <form action="{{route('worker.delete',$worker->id)}}" method="Post">
+            <form action="{{route('workers.destroy',$worker->id)}}" method="Post">
                 @csrf
                 @method('Delete')
                 <input type="submit" value="Удалить">

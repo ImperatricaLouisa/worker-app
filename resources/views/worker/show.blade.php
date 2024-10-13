@@ -12,7 +12,7 @@
             <div>description:{{$worker->description}}</div>
         </div>
         <div>
-            <a href="{{ route('worker.index', $worker->id)}}">Назад</a>
+            <a href="{{ route('workers.index', $worker->id)}}">Назад</a>
         </div>
         <hr>
     </div>
