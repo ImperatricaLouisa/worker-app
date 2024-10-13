@@ -4,7 +4,7 @@
     <div>
         <hr>
         <div>
-            <form action="{{route('worker.store')}}" method="post">
+            <form action="{{route('workers.store')}}" method="post">
                 @csrf
                 <div>
                     @error('name')
