@@ -1,18 +1,20 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+Route::resource('workers', \App\Http\Controllers\WorkerController::class)->middleware(['auth','isAdmin']);
+//первой указывается сущность с которой мы работаем во множественном числе а потом контроллер в который направляем
+//теперь workerController будет работать только с авторизаованными пользователями
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::resource('workers', \App\Http\Controllers\WorkerController::class);
-    //первой указывается сущность с которой мы работаем во множественном числе а потом контроллер в который направляем
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -21,3 +23,10 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+
+
+
+
+
+
