@@ -11,6 +11,18 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    //константы обозначающие кто есть кто
+    const ROLE_GUEST = 1;
+    const ROLE_ADMIN = 2;
+
+    public static function getRoles(): array //массив с пояснением что есть что
+    {
+        return [
+            self::ROLE_GUEST => 'guest',
+            self::ROLE_ADMIN => 'admin',
+        ];
+    }
+
     /**
      * The attributes that are mass assignable.
      *
