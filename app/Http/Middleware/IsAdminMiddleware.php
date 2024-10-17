@@ -18,7 +18,7 @@ class IsAdminMiddleware
     {
 //        dd(auth()->user());
         //хелпер auth() берет авторизаованного пользователя
-//        dd($request->user());
+        dd(13);
 
         if (auth()->user()->role !== User::ROLE_ADMIN){
             return redirect()->back();

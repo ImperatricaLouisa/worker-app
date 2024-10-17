@@ -6,14 +6,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('workers', \App\Http\Controllers\WorkerController::class)->middleware(['auth','isAdmin']);
+Route::resource('workers', \App\Http\Controllers\WorkerController::class)->middleware(['auth']);
 //первой указывается сущность с которой мы работаем во множественном числе а потом контроллер в который направляем
 //теперь workerController будет работать только с авторизаованными пользователями
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+//Route::get('/dashboard', function () {
+//    return view('dashboard');
+//})->middleware(['auth', 'verified'])->name('dashboard');
 
 
 Route::middleware('auth')->group(function () {
