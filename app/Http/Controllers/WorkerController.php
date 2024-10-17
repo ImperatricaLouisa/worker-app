@@ -6,9 +6,11 @@ use App\Http\Requests\Worker\IndexRequest;
 use App\Http\Requests\Worker\StoreRequest;
 use App\Http\Requests\Worker\UpdateRequest;
 use App\Models\Worker;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class WorkerController extends Controller
 {
+    use AuthorizesRequests;
     public function index(IndexRequest $request)
     {
         $data = $request->validated();
@@ -46,11 +48,13 @@ class WorkerController extends Controller
 
     public function create()
     {
+
         return view('worker.create');
     }
 
     public function store(StoreRequest $request)
     {
+        $this->authorize('create', Worker::class);
         $data = $request->validated();
         $data['is_married'] = isset($data['is_married']) ? true : false;
         Worker::create($data);
@@ -59,11 +63,13 @@ class WorkerController extends Controller
 
     public function edit(Worker $worker)
     {
+        $this->authorize('update', $worker);
         return view('worker.edit', compact('worker'));
     }
 
     public function update(UpdateRequest $request, Worker $worker)
     {
+        $this->authorize('update', $worker);
         $data = $request->validated();
         $data['is_married'] = isset($data['is_married']) ? true : false;
         $worker->update($data);
@@ -71,6 +77,7 @@ class WorkerController extends Controller
     }
     public function destroy(Worker $worker)
     {
+        $this->authorize('delete', $worker);
         $worker->delete();
         return redirect()->route('workers.index');
     }

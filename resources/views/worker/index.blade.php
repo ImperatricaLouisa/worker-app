@@ -2,8 +2,12 @@
 @section('content')
     <div>
         <hr>
-        <a href="{{route('workers.create')}}">Добавить</a>
-        <hr>
+        {{--деректива блейд can ограничивающая интерфейс исходя из прав пользователя--}}
+        {{--сперва ability из WorkerPolicy, затем модель с которой происходит вся работа)--}}
+        @can('create', \App\Models\Worker::class)
+            <a href="{{route('workers.create')}}">Добавить</a>
+            <hr>
+        @endcan
     </div>
     <div>
         <form action="{{ route('workers.index') }}">
@@ -32,14 +36,20 @@
             <div>
                 <a href="{{ route('workers.show', $worker->id)}}">Просмотреть</a>
             </div>
-            <div>
-                <a href="{{ route('workers.edit', $worker->id)}}">Редактировать</a>
-            </div>
-            <form action="{{route('workers.destroy',$worker->id)}}" method="Post">
-                @csrf
-                @method('Delete')
-                <input type="submit" value="Удалить">
-            </form>
+            @can('update', $worker)
+                <div>
+                    <a href="{{ route('workers.edit', $worker->id)}}">Редактировать</a>
+                </div>
+            @endcan
+            @can('delete', $worker)
+                <div>
+                    <form action="{{route('workers.destroy',$worker->id)}}" method="Post">
+                        @csrf
+                        @method('Delete')
+                        <input type="submit" value="Удалить">
+                    </form>
+                </div>
+            @endcan
             <hr>
         @endforeach
         <div class="my-nav">
