@@ -18,3 +18,6 @@ use App\Http\Controllers\API\ApiWorkerController;
 
 Route::get('workers', [ApiWorkerController::class,'index']);
 Route::get('workers/{worker}', [ApiWorkerController::class,'show']);
+Route::post('workers', [ApiWorkerController::class,'store']);
+Route::patch('workers/{worker}', [ApiWorkerController::class,'update']);
+Route::delete('workers/{worker}', [ApiWorkerController::class,'destroy']);
