@@ -17,3 +17,4 @@ use App\Http\Controllers\API\ApiWorkerController;
 
 
 Route::get('workers', [ApiWorkerController::class,'index']);
+Route::get('workers/{worker}', [ApiWorkerController::class,'show']);
