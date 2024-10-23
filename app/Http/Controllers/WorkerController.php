@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Filters\Var1\WorkerFilter;
 use App\Http\Requests\Worker\IndexRequest;
 use App\Http\Requests\Worker\StoreRequest;
 use App\Http\Requests\Worker\UpdateRequest;
@@ -15,30 +16,16 @@ class WorkerController extends Controller
     {
         $data = $request->validated();
         $workerQuery=Worker::query();
-        if(isset($data['name'])){
-            $workerQuery->where('name','like',"%{$data['name']}%");
-        }
-        if(isset($data['surname'])){
-            $workerQuery->where('surname','like',"%{$data['surname']}%");
-        }
-        if(isset($data['email'])){
-            $workerQuery->where('email','like',"%{$data['email']}%");
-        }
-        if(isset($data['from'])){
-            $workerQuery->where('age','>',$data['from']);
-        }
-        if(isset($data['to'])){
-            $workerQuery->where('age','<',$data['to']);
-        }
-        if(isset($data['description'])){
-            $workerQuery->where('description','like',"%{$data['description']}%");
-        }
-        if(isset($data['is_married'])){
-            $workerQuery->where('is_married',true);
-        }
+        //query() создаёт объект запросов (query builder) для модели Worker
+        //объект запроса ($workerQuery) будет использоваться для динамического построения SQL-запроса на основе входных данных (например, фильтров)
+        $filter = new WorkerFilter($data);
+        //создаётся экземпляр класса WorkerFilter, в конструктор передаются валидированные данные запроса ($data)
+        $filter->applyFilter($workerQuery);
+        //applyFilter($workerQuery) применяет фильтры к запросу. Он проходит по всем переданным данным и вызывает соответствующие методы фильтрации, добавляя условия к запросу.
         $workers = $workerQuery->paginate(2);
 
         return view('worker.index', compact('workers'));
+        //Функция compact('workers') создаёт массив с ключом 'workers', который затем используется в шаблоне представления.
     }
 
     public function show(Worker $worker)

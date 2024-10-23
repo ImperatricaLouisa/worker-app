@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Filters\Var1\WorkerFilter;
 use App\Jobs\SomeJob;
 use App\Models\Avatar;
 use App\Models\Client;
@@ -33,7 +34,10 @@ class DevCommand extends Command {
      * Execute the console command.
      */
     public function handle() {
-        SomeJob::dispatch()->onQueue('some_queue');
+        $workerQuery = Worker::query();
+        $filter = new WorkerFilter(['from'=>10, 'to' => 100]);
+        $filter->applyFilter($workerQuery);
+        dd($workerQuery->get());
         return 0;
     }
 }
