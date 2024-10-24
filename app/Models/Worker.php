@@ -3,17 +3,22 @@
 namespace App\Models;
 
 use App\Events\Worker\CreatedEvent;
+use App\Http\Filters\Var1\AbstractFilter;
+use App\Models\Traits\HasFilter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use \Illuminate\Database\Eloquent\Builder;
 
 class Worker extends Model
     {
+        use HasFilter;
         use HasFactory;
         use SoftDeletes;
 
         protected $table = 'workers'; //Указывает, что данная модель связана с таблицей workers в базе данных.
         protected $guarded = false;
+
 
         protected static function booted()
         {
