@@ -4,12 +4,12 @@ namespace App\Http\Filters\Var2\Worker;
 
 use Illuminate\Database\Eloquent\Builder;
 
-class AgeTo
+class AgeFrom
 {
     public function handle(Builder $builder, \Closure $next)
     {
-        if (request('age')){
-            $builder->where('age', request('age'));
+        if (request('from')){
+            $builder->where('age', '>', request('from'));
         }
         return $next($builder);
     }

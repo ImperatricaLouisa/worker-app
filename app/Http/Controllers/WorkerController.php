@@ -3,23 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Http\Filters\Var1\WorkerFilter;
+use App\Http\Filters\Var2\Worker\AgeFrom;
+use App\Http\Filters\Var2\Worker\AgeTo;
+use App\Http\Filters\Var2\Worker\Name;
 use App\Http\Requests\Worker\IndexRequest;
 use App\Http\Requests\Worker\StoreRequest;
 use App\Http\Requests\Worker\UpdateRequest;
 use App\Models\Worker;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-
+use Illuminate\Pipeline\Pipeline;
 
 class WorkerController extends Controller
 {
     use AuthorizesRequests;
     public function index(IndexRequest $request)
     {
-        $data = $request->validated();
-//        $filter = app()-make(WorkerFilter::class,['params' => $data]);
-        $filter = new WorkerFilter($data);
-        $workerQuery = Worker::filter($filter);
-        $workers = $workerQuery->paginate(2);
+        $workers = app()->make(Pipeline::class)
+            ->send(Worker::query())
+            ->through([
+                AgeFrom::class,
+                AgeTo::class,
+                Name::class,
+            ])
+            ->thenReturn();
+
+        $workers = $workers->paginate(2);
 
         return view('worker.index', compact('workers'));
         //Функция compact('workers') создаёт массив с ключом 'workers', который затем используется в шаблоне представления.
