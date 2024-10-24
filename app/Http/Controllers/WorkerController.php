@@ -9,19 +9,16 @@ use App\Http\Requests\Worker\UpdateRequest;
 use App\Models\Worker;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
+
 class WorkerController extends Controller
 {
     use AuthorizesRequests;
     public function index(IndexRequest $request)
     {
         $data = $request->validated();
-        $workerQuery=Worker::query();
-        //query() создаёт объект запросов (query builder) для модели Worker
-        //объект запроса ($workerQuery) будет использоваться для динамического построения SQL-запроса на основе входных данных (например, фильтров)
+//        $filter = app()-make(WorkerFilter::class,['params' => $data]);
         $filter = new WorkerFilter($data);
-        //создаётся экземпляр класса WorkerFilter, в конструктор передаются валидированные данные запроса ($data)
-        $filter->applyFilter($workerQuery);
-        //applyFilter($workerQuery) применяет фильтры к запросу. Он проходит по всем переданным данным и вызывает соответствующие методы фильтрации, добавляя условия к запросу.
+        $workerQuery = Worker::filter($filter);
         $workers = $workerQuery->paginate(2);
 
         return view('worker.index', compact('workers'));
